@@ -1,9 +1,7 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import Tenzies from "./Tenzies";
-import ThemeContext from "./themeContext";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
@@ -12,10 +10,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ThemeContext.Provider value="light">
-      <Router>
-        <App />
-      </Router>
-    </ThemeContext.Provider>
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>
 );
