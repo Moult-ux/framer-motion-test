@@ -1,7 +1,9 @@
 import React from "react";
 
 function App() {
-  return <></>;
+  return <>
+  <button className="btn">Bouton daisyUi</button>
+  </>;
 }
 
 export default App;
