@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { NavBar } from "./components/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GridSample } from "./components/GridSample";
+import { FormsSample } from "./components/FormsSample";
+import { UsersSample } from "./components/UsersSample";
+import { TableSample } from "./components/TableSample";
 
 function App() {
   const [selectedMenuId, setSelectedMenuID] = useState(1);
@@ -24,12 +28,12 @@ function App() {
           selectedMenuIdCallBack={selectedMenuIdCallBack}
         />
 
-        <div className="w-full">
+        <div className="w-10/12 m-4">
           <Routes>
-            <Route path="/" element={<h1>Dashboard</h1>} />
-            <Route path="/data" element={<h1>Data</h1>} />
-            <Route path="/users" element={<h1>Users</h1>} />
-            <Route path="/admin" element={<h1>Admin</h1>} />
+            <Route path="/" element={<GridSample />} />
+            <Route path="/data" element={<TableSample />} />
+            <Route path="/users" element={<UsersSample />} />
+            <Route path="/admin" element={<FormsSample />} />
           </Routes>
         </div>
       </div>

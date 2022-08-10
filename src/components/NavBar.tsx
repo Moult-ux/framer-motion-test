@@ -69,6 +69,7 @@ export const NavBar = (props: {
 
   const topMenuDist = 5 + 44 * props.selectedMenuId;
   const lastTopMenuDist = 5 + 44 * props.lastSelectedMenuId;
+  console.log(props.selectedMenuId);
 
   return (
     <div id="navbar">
