@@ -2,7 +2,7 @@ import React from "react";
 
 export const FormsSample = () => {
   return (
-    <section className="bg-coolGray-50 py-4">
+    <section className="bg-coolGray-50 py-4 bg-orange-400">
       <div className="container px-4 mx-auto">
         <div className="p-6 h-full border border-coolGray-100 overflow-hidden bg-white rounded-md shadow-dashboard">
           <div className="pb-6 border-b border-coolGray-100">

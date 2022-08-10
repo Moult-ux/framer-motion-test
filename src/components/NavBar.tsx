@@ -23,7 +23,10 @@ const MenuItem = (props: {
     <Link
       to={props.href}
       className={`flex items-center pl-3 py-3 pr-4 text-gray-50 ${selectedBg} ${hover} rounded`}
-      onClick={() => props.selectedMenuIdCallBack(props.id)}
+      onClick={() => {
+        props.selectedMenuIdCallBack(props.id);
+        console.log(props.id);
+      }}
     >
       <span className="inline-block mr-3">{props.icon}</span>
       <span>{props.label}</span>
@@ -69,7 +72,6 @@ export const NavBar = (props: {
 
   const topMenuDist = 5 + 44 * props.selectedMenuId;
   const lastTopMenuDist = 5 + 44 * props.lastSelectedMenuId;
-  console.log(props.selectedMenuId);
 
   return (
     <div id="navbar">
@@ -85,6 +87,7 @@ export const NavBar = (props: {
               className={`absolute h-8 w-10/12 rounded bg-indigo-500 mix-blend-lighten`}
               initial={{ y: lastTopMenuDist }}
               animate={{ y: topMenuDist }}
+              transition={{ duration: 0.5 }}
             ></motion.div>
             <ul className="mb-8 text-sm font-medium">
               {menuList.map((menuItem) => (

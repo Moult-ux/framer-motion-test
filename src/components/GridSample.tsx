@@ -2,7 +2,7 @@ import React from "react";
 
 export const GridSample = () => {
   return (
-    <section className="py-8">
+    <section className="py-8 bg-blue-400">
       <div className="container px-4 mx-auto">
         <div className="pt-4 bg-white shadow rounded">
           <div className="flex px-6 pb-4 border-b">

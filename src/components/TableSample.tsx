@@ -2,7 +2,7 @@ import React from "react";
 
 export const TableSample = () => {
   return (
-    <section className="bg-coolGray-50 py-4">
+    <section className="bg-red-500 py-4">
       <div className="container px-4 mx-auto">
         <div className="pt-6 bg-white overflow-hidden border border-coolGray-100 rounded-md shadow-dashboard">
           <h2 className="px-6 mb-4 text-lg text-coolGray-900 font-semibold">
