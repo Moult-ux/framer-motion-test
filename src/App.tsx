@@ -27,38 +27,72 @@ const pageMotionVariants: Variants = {
 function App() {
   const [selectedMenuId, setSelectedMenuID] = useState(0);
   const [lastSelectedMenuId, setLastSelectedMenuID] = useState(0);
-  const [fromTop, setFromTop] = useState(1);
-  const enterPageAnimation = useAnimation();
-  const exitPageAnimation = useAnimation();
+  // const [fromTop, setFromTop] = useState(1);
+  const menu0Animation = useAnimation();
+  const menu1Animation = useAnimation();
+  const menu2Animation = useAnimation();
+  const menu3Animation = useAnimation();
 
   useEffect(() => {
-    if (selectedMenuId > lastSelectedMenuId) {
-      setFromTop(1);
-    } else {
-      setFromTop(-1);
+    menu0Animation.start("normal");
+    menu1Animation.start("normal");
+  }, [selectedMenuId]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     if (selectedMenuId > lastSelectedMenuId) {
+  //       enterPageAnimation.start("top");
+  //       await exitPageAnimation.start("bottom");
+  //       enterPageAnimation.start("normal");
+  //     } else {
+  //       enterPageAnimation.start("bottom");
+  //       await exitPageAnimation.start("top");
+
+  //       enterPageAnimation.start("normal");
+  //     }
+  //   })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [fromTop, selectedMenuId, lastSelectedMenuId]);
+
+  enum Direction {
+    TOP = "top",
+    BOTTOM = "bottom",
+  }
+
+  function animatePage(direction: Direction, menuId: number) {
+    switch (menuId) {
+      case 0:
+        menu0Animation.start("normal");
+        break;
+      case 1:
+        menu1Animation.start("normal");
+        break;
+      case 2:
+        menu2Animation.start("normal");
+        break;
+      case 3:
+        menu3Animation.start("normal");
+        break;
+      default:
+        break;
     }
-  }, [selectedMenuId, lastSelectedMenuId]);
-
-  useEffect(() => {
-    (async () => {
-      if (selectedMenuId > lastSelectedMenuId) {
-        enterPageAnimation.start("top");
-        await exitPageAnimation.start("bottom");
-        enterPageAnimation.start("normal");
-      } else {
-        enterPageAnimation.start("bottom");
-        await exitPageAnimation.start("top");
-
-        enterPageAnimation.start("normal");
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fromTop, selectedMenuId, lastSelectedMenuId]);
+  }
 
   const selectedMenuIdCallBack = (id: number) => {
-    setLastSelectedMenuID(selectedMenuId);
+    const lastSelectedMenuId = selectedMenuId;
+    setLastSelectedMenuID(lastSelectedMenuId);
     setSelectedMenuID(id);
+    const menuIsGoingDown = id >= lastSelectedMenuId;
+
+    //Exiting page animation
+    // animatePage(
+    //   menuIsGoingDown ? Direction.TOP : Direction.BOTTOM,
+    //   lastSelectedMenuId
+    // );
+    //Entering page animation
+    animatePage(menuIsGoingDown ? Direction.BOTTOM : Direction.TOP, id);
   };
+
   const location = useLocation();
 
   return (
@@ -81,12 +115,8 @@ function App() {
                 element={
                   <motion.div
                     variants={pageMotionVariants}
-                    initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={
-                      selectedMenuId === 0
-                        ? enterPageAnimation
-                        : exitPageAnimation
-                    }
+                    initial="top"
+                    animate={menu0Animation}
                     transition={{ duration: 2 }}
                   >
                     <GridSample />
@@ -98,12 +128,8 @@ function App() {
                 element={
                   <motion.div
                     variants={pageMotionVariants}
-                    initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={
-                      selectedMenuId === 1
-                        ? enterPageAnimation
-                        : exitPageAnimation
-                    }
+                    initial="top"
+                    animate={menu1Animation}
                     transition={{ duration: 2 }}
                   >
                     <TableSample />
@@ -115,12 +141,8 @@ function App() {
                 element={
                   <motion.div
                     variants={pageMotionVariants}
-                    initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={
-                      selectedMenuId === 2
-                        ? enterPageAnimation
-                        : exitPageAnimation
-                    }
+                    initial="top"
+                    animate={menu2Animation}
                     transition={{ duration: 2 }}
                   >
                     <UsersSample />
@@ -132,12 +154,8 @@ function App() {
                 element={
                   <motion.div
                     variants={pageMotionVariants}
-                    initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={
-                      selectedMenuId === 3
-                        ? enterPageAnimation
-                        : exitPageAnimation
-                    }
+                    initial="top"
+                    animate={menu3Animation}
                     transition={{ duration: 2 }}
                   >
                     <FormsSample />
