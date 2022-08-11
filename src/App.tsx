@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation, Variants } from "framer-motion";
 import { NavBar } from "./components/NavBar";
-import { Routes, Route, useLocation } from "react-router-dom";
 import { GridSample } from "./components/GridSample";
 import { FormsSample } from "./components/FormsSample";
 import { UsersSample } from "./components/UsersSample";
 import { TableSample } from "./components/TableSample";
-import AnimatedPage from "./components/AnimatedPage";
 
-const exitDistance = 100;
+const exitDistance = 600;
 const pageMotionVariants: Variants = {
   top: {
-    opacity: 1,
+    opacity: 0,
     y: -exitDistance,
   },
   bottom: {
-    opacity: 1,
+    opacity: 0,
     y: exitDistance,
   },
   normal: {
@@ -27,51 +25,39 @@ const pageMotionVariants: Variants = {
 function App() {
   const [selectedMenuId, setSelectedMenuID] = useState(0);
   const [lastSelectedMenuId, setLastSelectedMenuID] = useState(0);
-  // const [fromTop, setFromTop] = useState(1);
+  const [fromTop, setFromTop] = useState(1);
   const menu0Animation = useAnimation();
   const menu1Animation = useAnimation();
   const menu2Animation = useAnimation();
   const menu3Animation = useAnimation();
-
-  useEffect(() => {
-    menu0Animation.start("normal");
-    menu1Animation.start("normal");
-  }, [selectedMenuId]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (selectedMenuId > lastSelectedMenuId) {
-  //       enterPageAnimation.start("top");
-  //       await exitPageAnimation.start("bottom");
-  //       enterPageAnimation.start("normal");
-  //     } else {
-  //       enterPageAnimation.start("bottom");
-  //       await exitPageAnimation.start("top");
-
-  //       enterPageAnimation.start("normal");
-  //     }
-  //   })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [fromTop, selectedMenuId, lastSelectedMenuId]);
-
   enum Direction {
     TOP = "top",
     BOTTOM = "bottom",
+    NORMAL = "normal",
   }
+  useEffect(() => {
+    //Exiting page animation
+    animatePage(
+      fromTop === 1 ? Direction.TOP : Direction.BOTTOM,
+      lastSelectedMenuId
+    );
+    //Entering page animation
+    animatePage(Direction.NORMAL, selectedMenuId);
+  }, [selectedMenuId, fromTop]);
 
   function animatePage(direction: Direction, menuId: number) {
     switch (menuId) {
       case 0:
-        menu0Animation.start("normal");
+        menu0Animation.start(direction);
         break;
       case 1:
-        menu1Animation.start("normal");
+        menu1Animation.start(direction);
         break;
       case 2:
-        menu2Animation.start("normal");
+        menu2Animation.start(direction);
         break;
       case 3:
-        menu3Animation.start("normal");
+        menu3Animation.start(direction);
         break;
       default:
         break;
@@ -84,16 +70,9 @@ function App() {
     setSelectedMenuID(id);
     const menuIsGoingDown = id >= lastSelectedMenuId;
 
-    //Exiting page animation
-    // animatePage(
-    //   menuIsGoingDown ? Direction.TOP : Direction.BOTTOM,
-    //   lastSelectedMenuId
-    // );
-    //Entering page animation
-    animatePage(menuIsGoingDown ? Direction.BOTTOM : Direction.TOP, id);
+    menuIsGoingDown ? setFromTop(1) : setFromTop(-1);
+    console.log("goging dowdn : " + menuIsGoingDown);
   };
-
-  const location = useLocation();
 
   return (
     <div className="w-screen h-screen">
@@ -107,63 +86,57 @@ function App() {
           selectedMenuIdCallBack={selectedMenuIdCallBack}
         />
 
-        <div className="w-10/12 m-4 overflow-hidden">
-          <AnimatePresence exitBeforeEnter={true}>
-            <Routes location={location} key={location.pathname}>
-              <Route
-                path="/"
-                element={
-                  <motion.div
-                    variants={pageMotionVariants}
-                    initial="top"
-                    animate={menu0Animation}
-                    transition={{ duration: 2 }}
-                  >
-                    <GridSample />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/data"
-                element={
-                  <motion.div
-                    variants={pageMotionVariants}
-                    initial="top"
-                    animate={menu1Animation}
-                    transition={{ duration: 2 }}
-                  >
-                    <TableSample />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/users"
-                element={
-                  <motion.div
-                    variants={pageMotionVariants}
-                    initial="top"
-                    animate={menu2Animation}
-                    transition={{ duration: 2 }}
-                  >
-                    <UsersSample />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <motion.div
-                    variants={pageMotionVariants}
-                    initial="top"
-                    animate={menu3Animation}
-                    transition={{ duration: 2 }}
-                  >
-                    <FormsSample />
-                  </motion.div>
-                }
-              />
-            </Routes>
-          </AnimatePresence>
+        <div
+          className="w-10/12 m-4 overflow-hidden"
+          onClick={() => {
+            console.log("clicked");
+          }}
+        >
+          {selectedMenuId === 0 && (
+            <motion.div
+              variants={pageMotionVariants}
+              initial={fromTop === 1 ? "top" : "bottom"}
+              animate={menu0Animation}
+              transition={{ duration: 2 }}
+            >
+              <h1>Dashboard</h1>
+              <GridSample />
+            </motion.div>
+          )}
+
+          {selectedMenuId === 1 && (
+            <motion.div
+              variants={pageMotionVariants}
+              initial={fromTop === 1 ? "top" : "bottom"}
+              animate={menu1Animation}
+              transition={{ duration: 2 }}
+            >
+              <h1>Data</h1>
+              <TableSample />
+            </motion.div>
+          )}
+          {selectedMenuId === 2 && (
+            <motion.div
+              variants={pageMotionVariants}
+              initial={fromTop === 1 ? "top" : "bottom"}
+              animate={menu2Animation}
+              transition={{ duration: 2 }}
+            >
+              <h1>Forms</h1>
+              <FormsSample />
+            </motion.div>
+          )}
+          {selectedMenuId === 3 && (
+            <motion.div
+              variants={pageMotionVariants}
+              initial={fromTop === 1 ? "top" : "bottom"}
+              animate={menu3Animation}
+              transition={{ duration: 2 }}
+            >
+              <h1>Users</h1>
+              <UsersSample />
+            </motion.div>
+          )}
         </div>
       </div>
     </div>

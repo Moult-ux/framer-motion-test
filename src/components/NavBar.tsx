@@ -3,9 +3,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { FiDatabase } from "react-icons/fi";
 import { TbUsers } from "react-icons/tb";
 import { BiCog } from "react-icons/bi";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { log } from "console";
 
 const MenuItem = (props: {
   id: number;
@@ -20,8 +18,7 @@ const MenuItem = (props: {
   //  const hover = props.isCurrent ? "" : "hover:bg-gray-900";
   //const selectedBg = props.isCurrent ? "bg-indigo-500" : "";
   return (
-    <Link
-      to={props.href}
+    <div
       className={`flex items-center pl-3 py-3 pr-4 text-gray-50 ${selectedBg} ${hover} rounded`}
       onClick={() => {
         props.selectedMenuIdCallBack(props.id);
@@ -30,7 +27,7 @@ const MenuItem = (props: {
     >
       <span className="inline-block mr-3">{props.icon}</span>
       <span>{props.label}</span>
-    </Link>
+    </div>
   );
 };
 
