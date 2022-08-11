@@ -8,14 +8,14 @@ import { UsersSample } from "./components/UsersSample";
 import { TableSample } from "./components/TableSample";
 import AnimatedPage from "./components/AnimatedPage";
 
-const exitDistance = 400;
+const exitDistance = 100;
 const pageMotionVariants: Variants = {
   top: {
-    opacity: 0,
+    opacity: 1,
     y: -exitDistance,
   },
   bottom: {
-    opacity: 0,
+    opacity: 1,
     y: exitDistance,
   },
   normal: {
@@ -25,26 +25,35 @@ const pageMotionVariants: Variants = {
 };
 
 function App() {
-  const [selectedMenuId, setSelectedMenuID] = useState(1);
-  const [lastSelectedMenuId, setLastSelectedMenuID] = useState(1);
+  const [selectedMenuId, setSelectedMenuID] = useState(0);
+  const [lastSelectedMenuId, setLastSelectedMenuID] = useState(0);
   const [fromTop, setFromTop] = useState(1);
   const enterPageAnimation = useAnimation();
   const exitPageAnimation = useAnimation();
 
   useEffect(() => {
+    if (selectedMenuId > lastSelectedMenuId) {
+      setFromTop(1);
+    } else {
+      setFromTop(-1);
+    }
+  }, [selectedMenuId, lastSelectedMenuId]);
+
+  useEffect(() => {
     (async () => {
       if (selectedMenuId > lastSelectedMenuId) {
-        await enterPageAnimation.start("top");
+        enterPageAnimation.start("top");
         await exitPageAnimation.start("bottom");
-        setFromTop(1);
+        enterPageAnimation.start("normal");
       } else {
-        await enterPageAnimation.start("bottom");
+        enterPageAnimation.start("bottom");
         await exitPageAnimation.start("top");
-        setFromTop(-1);
+
+        enterPageAnimation.start("normal");
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedMenuId, lastSelectedMenuId]);
+  }, [fromTop, selectedMenuId, lastSelectedMenuId]);
 
   const selectedMenuIdCallBack = (id: number) => {
     setLastSelectedMenuID(selectedMenuId);
@@ -71,8 +80,13 @@ function App() {
                 path="/"
                 element={
                   <motion.div
+                    variants={pageMotionVariants}
                     initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={enterPageAnimation}
+                    animate={
+                      selectedMenuId === 0
+                        ? enterPageAnimation
+                        : exitPageAnimation
+                    }
                     transition={{ duration: 2 }}
                   >
                     <GridSample />
@@ -83,8 +97,13 @@ function App() {
                 path="/data"
                 element={
                   <motion.div
+                    variants={pageMotionVariants}
                     initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={enterPageAnimation}
+                    animate={
+                      selectedMenuId === 1
+                        ? enterPageAnimation
+                        : exitPageAnimation
+                    }
                     transition={{ duration: 2 }}
                   >
                     <TableSample />
@@ -95,8 +114,13 @@ function App() {
                 path="/users"
                 element={
                   <motion.div
+                    variants={pageMotionVariants}
                     initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={enterPageAnimation}
+                    animate={
+                      selectedMenuId === 2
+                        ? enterPageAnimation
+                        : exitPageAnimation
+                    }
                     transition={{ duration: 2 }}
                   >
                     <UsersSample />
@@ -107,8 +131,13 @@ function App() {
                 path="/admin"
                 element={
                   <motion.div
+                    variants={pageMotionVariants}
                     initial={fromTop === 1 ? "top" : "bottom"}
-                    animate={enterPageAnimation}
+                    animate={
+                      selectedMenuId === 3
+                        ? enterPageAnimation
+                        : exitPageAnimation
+                    }
                     transition={{ duration: 2 }}
                   >
                     <FormsSample />
