@@ -19,20 +19,17 @@ function App() {
 
   return (
     <div className="w-screen h-screen">
-      <AnimatePresence>
-        <div className="flex">
-          <NavBar
-            selectedMenuId={selectedMenuId}
-            lastSelectedMenuId={lastSelectedMenuId}
-            selectedMenuIdCallBack={selectedMenuIdCallBack}
-          />
-          <AnimatedContainer
-            menuIsGoingDown={menuIsGoingDown}
-            selectedMenuId={selectedMenuId}
-            key={selectedMenuId}
-          />
-        </div>
-      </AnimatePresence>
+      <div className="flex">
+        <NavBar
+          selectedMenuId={selectedMenuId}
+          lastSelectedMenuId={lastSelectedMenuId}
+          selectedMenuIdCallBack={selectedMenuIdCallBack}
+        />
+        <AnimatedContainer
+          menuIsGoingDown={menuIsGoingDown}
+          selectedMenuId={selectedMenuId}
+        />
+      </div>
     </div>
   );
 }

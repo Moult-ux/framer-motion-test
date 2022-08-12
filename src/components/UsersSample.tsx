@@ -2,7 +2,7 @@ import React from "react";
 
 export const UsersSample = () => {
   return (
-    <section className="py-8 bg-green-400">
+    <section className="py-8">
       <div className="container px-4 mx-auto">
         <div className="flex flex-wrap -m-4">
           <div className="w-full md:w-1/2 lg:w-1/4 p-4">
