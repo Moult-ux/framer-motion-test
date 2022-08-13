@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { RiDashboardLine } from "react-icons/ri";
 import { FiDatabase } from "react-icons/fi";
 import { TbUsers } from "react-icons/tb";
@@ -13,13 +14,10 @@ const MenuItem = (props: {
   icon: ReactNode;
   selectedMenuIdCallBack: (id: number) => any;
 }) => {
-  const selectedBg = "";
-  const hover = "";
-  //  const hover = props.isCurrent ? "" : "hover:bg-gray-900";
-  //const selectedBg = props.isCurrent ? "bg-indigo-500" : "";
   return (
-    <div
-      className={`flex items-center pl-3 py-3 pr-4 text-gray-50 ${selectedBg} ${hover} rounded`}
+    <Link
+      to={props.href}
+      className={`flex items-center pl-3 py-3 pr-4 text-gray-50  rounded`}
       onClick={() => {
         props.selectedMenuIdCallBack(props.id);
         console.log(props.id);
@@ -27,7 +25,7 @@ const MenuItem = (props: {
     >
       <span className="inline-block mr-3">{props.icon}</span>
       <span>{props.label}</span>
-    </div>
+    </Link>
   );
 };
 
@@ -60,7 +58,7 @@ export const NavBar = (props: {
     },
     {
       id: 3,
-      href: "/admin",
+      href: "/  ",
       label: "Admin",
       isCurrent: false,
       icon: <BiCog />,

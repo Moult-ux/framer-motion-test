@@ -8,18 +8,22 @@ interface Props {
 }
 
 const exitDistance = 600;
+const animationDuration = 0.2;
 const pageMotionVariants: Variants = {
   top: {
     opacity: 0,
     y: -exitDistance,
+    transition: { duration: animationDuration },
   },
   bottom: {
     opacity: 0,
     y: exitDistance,
+    transition: { duration: animationDuration },
   },
   normal: {
     opacity: 1,
     y: 0,
+    transition: { ease: "easeIn", duration: animationDuration },
   },
 };
 
@@ -30,8 +34,7 @@ const AnimatedPage = ({ children, ...props }: Props) => {
       variants={pageMotionVariants}
       initial={props.menuIsGoingDown === 1 ? "bottom" : "top"}
       animate={"normal"}
-      exit={props.menuIsGoingDown === 1 ? "bottom" : "top"}
-      transition={{ duration: 0.2 }}
+      exit={props.menuIsGoingDown === 1 ? "top" : "bottom"}
     >
       {children}
     </motion.div>
